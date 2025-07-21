@@ -18,20 +18,12 @@ const SignInForm = ({}: Props) => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
 
-  console.log("formFields", formFields);
-
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
   };
 
   const signInWithGoogle = async () => {
-    const { user } = await signInWithGooglePopup();
-    const userDocRef = await createUserDocumentFromAuth({
-      uid: user.uid,
-      displayName: user.displayName || undefined,
-      email: user.email || undefined,
-    });
-    console.log("userDocRef", userDocRef);
+    await signInWithGooglePopup();
   };
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
@@ -39,7 +31,10 @@ const SignInForm = ({}: Props) => {
 
     try {
       const res = await signInAuthUserWithEmailAndPassword(email, password);
-      console.log("res", res);
+
+      if (!res?.user) {
+        throw new Error("No user returned from sign-in");
+      }
 
       resetFormFields();
     } catch (error) {

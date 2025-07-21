@@ -19,8 +19,6 @@ const SignUpForm = ({}: Props) => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
 
-  console.log("formFields", formFields);
-
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
   };
@@ -38,8 +36,6 @@ const SignUpForm = ({}: Props) => {
         password
       );
 
-      console.log("userCredential", userCredential);
-
       if (userCredential === undefined) {
         alert("Error creating user");
         return;
@@ -47,11 +43,7 @@ const SignUpForm = ({}: Props) => {
 
       const { user } = userCredential;
 
-      await createUserDocumentFromAuth({
-        uid: user.uid,
-        displayName,
-        email: user.email || undefined,
-      });
+      await createUserDocumentFromAuth({ ...user, displayName });
       resetFormFields();
     } catch (error) {
       console.error("Error creating user", error);
