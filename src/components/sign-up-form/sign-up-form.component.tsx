@@ -54,11 +54,11 @@ const SignUpForm = ({}: Props) => {
       });
       resetFormFields();
     } catch (error) {
+      console.error("Error creating user", error);
       if ((error as any).code === "auth/email-already-in-use") {
         alert("Cannot create user, email already in use");
       } else {
         alert("Error creating user");
-        console.error("Error creating user", error);
       }
     }
   };
@@ -77,7 +77,6 @@ const SignUpForm = ({}: Props) => {
         <FormInput
           label="Display Name"
           type="text"
-          id="displayName"
           name="displayName"
           value={displayName}
           required
@@ -87,7 +86,6 @@ const SignUpForm = ({}: Props) => {
         <FormInput
           label="Email"
           type="email"
-          id="email"
           name="email"
           value={email}
           required
@@ -97,7 +95,6 @@ const SignUpForm = ({}: Props) => {
         <FormInput
           label="Password"
           type="password"
-          id="password"
           name="password"
           value={password}
           required
@@ -107,14 +104,13 @@ const SignUpForm = ({}: Props) => {
         <FormInput
           label="Confirm Password"
           type="password"
-          id="confirmPassword"
           name="confirmPassword"
           value={confirmPassword}
           required
           onChange={handleChange}
         />
 
-        <Button type="submit">Sign Up </Button>
+        <Button type="submit">Sign Up</Button>
       </form>
     </div>
   );
