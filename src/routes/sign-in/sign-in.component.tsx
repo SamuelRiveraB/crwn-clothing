@@ -12,6 +12,7 @@ const SignIn = ({}: Props) => {
       displayName: user.displayName || undefined,
       email: user.email || undefined,
     });
+    console.log("userDocRef", userDocRef);
   };
 
   return (
