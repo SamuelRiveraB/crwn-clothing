@@ -2,6 +2,7 @@ import {
   signInWithGooglePopup,
   createUserDocumentFromAuth,
 } from "../../utils/firebase/firebase.utils.ts";
+import SignUpForm from "../../components/sign-up-form/sign-up-form.component.tsx";
 
 type Props = {};
 const SignIn = ({}: Props) => {
@@ -19,6 +20,7 @@ const SignIn = ({}: Props) => {
     <div>
       <h1>Sign In Page</h1>
       <button onClick={logGoogleUser}>Sign in with Google Popup</button>
+      <SignUpForm />
     </div>
   );
 };
