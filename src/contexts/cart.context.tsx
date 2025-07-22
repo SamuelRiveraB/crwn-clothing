@@ -1,5 +1,5 @@
 import { createContext, useState, ReactNode, useEffect } from "react";
-import { Product } from "./products.context";
+import { Product } from "./categories.context";
 
 const addCartItem = (
   cartItems: ICartItem[],
