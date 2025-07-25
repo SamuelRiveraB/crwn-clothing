@@ -1,6 +1,6 @@
 import { ReactNode, useReducer } from "react";
 import { User } from "firebase/auth";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect } from "react";
 import {
   createUserDocumentFromAuth,
   onAuthStateChangedListener,
