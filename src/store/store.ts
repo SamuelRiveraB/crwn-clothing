@@ -8,6 +8,9 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import logger from "redux-logger";
 import { RootState, rootReducer } from "./root-reducer";
+import { thunk } from "redux-thunk";
+import { ThunkDispatch } from "redux-thunk";
+import { AnyAction } from "redux";
 
 declare global {
   interface Window {
@@ -18,7 +21,7 @@ declare global {
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["user"],
+  whitelist: ["cart"],
 };
 
 const persistedReducer = persistReducer<RootState>(
@@ -26,9 +29,10 @@ const persistedReducer = persistReducer<RootState>(
   rootReducer as any
 );
 
-const middlewares = [process.env.NODE_ENV !== "production" && logger].filter(
-  Boolean
-) as Middleware[];
+const middlewares = [
+  process.env.NODE_ENV !== "production" && logger,
+  thunk,
+].filter(Boolean) as Middleware[];
 
 const composeEnhancer =
   (process.env.NODE_ENV !== "production" &&
@@ -39,5 +43,5 @@ const composeEnhancer =
 const composedEnhancers = composeEnhancer(applyMiddleware(...middlewares));
 
 export const store = createStore(persistedReducer, composedEnhancers);
-
 export const persistor = persistStore(store);
+export type AppDispatch = ThunkDispatch<RootState, void, AnyAction>;
