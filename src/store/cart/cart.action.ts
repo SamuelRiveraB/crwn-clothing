@@ -1,5 +1,5 @@
 import { createAction } from "../../utils/reducer/reducer.utils";
-import { CART_ACTION_TYPES, CartState, ICartItem } from "./cart.types";
+import { CART_ACTION_TYPES, ICartItem } from "./cart.types";
 
 const addCartItem = (
   cartItems: ICartItem[],
@@ -42,9 +42,6 @@ const deleteItem = (cartItems: ICartItem[], productToDelete: ICartItem) =>
 export const setIsCartOpen = (isCartOpen: boolean) =>
   createAction(CART_ACTION_TYPES.SET_IS_CART_OPEN, isCartOpen);
 
-export const setCart = (cart: CartState) =>
-  createAction(CART_ACTION_TYPES.SET_CART_ITEMS, cart);
-
 export const addItemToCart = (cartItems: ICartItem[], product: ICartItem) => {
   const newCartItems = addCartItem(cartItems, product);
   return createAction(CART_ACTION_TYPES.SET_CART_ITEMS, newCartItems);
@@ -65,3 +62,6 @@ export const deleteItemFromCart = (
   const newCartItems = deleteItem(cartItems, product);
   return createAction(CART_ACTION_TYPES.SET_CART_ITEMS, newCartItems);
 };
+
+export const setCartItems = (cartItems: ICartItem[]) =>
+  createAction(CART_ACTION_TYPES.SET_CART_ITEMS, cartItems);
