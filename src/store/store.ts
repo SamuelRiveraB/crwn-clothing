@@ -8,9 +8,8 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import logger from "redux-logger";
 import { RootState, rootReducer } from "./root-reducer";
-import { thunk } from "redux-thunk";
-import { ThunkDispatch } from "redux-thunk";
-import { AnyAction } from "redux";
+import createSagaMiddleware from "redux-saga";
+import { rootSaga } from "./root-saga";
 
 declare global {
   interface Window {
@@ -24,6 +23,8 @@ const persistConfig = {
   whitelist: ["cart"],
 };
 
+const sagaMiddleware = createSagaMiddleware();
+
 const persistedReducer = persistReducer<RootState>(
   persistConfig,
   rootReducer as any
@@ -31,7 +32,7 @@ const persistedReducer = persistReducer<RootState>(
 
 const middlewares = [
   process.env.NODE_ENV !== "production" && logger,
-  thunk,
+  sagaMiddleware,
 ].filter(Boolean) as Middleware[];
 
 const composeEnhancer =
@@ -43,5 +44,7 @@ const composeEnhancer =
 const composedEnhancers = composeEnhancer(applyMiddleware(...middlewares));
 
 export const store = createStore(persistedReducer, composedEnhancers);
+
+sagaMiddleware.run(rootSaga);
+
 export const persistor = persistStore(store);
-export type AppDispatch = ThunkDispatch<RootState, void, AnyAction>;
