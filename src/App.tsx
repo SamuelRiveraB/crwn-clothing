@@ -19,8 +19,7 @@ const App = () => {
       if (user) {
         createUserDocumentFromAuth(user);
       }
-      const pickedUser =
-        user && (({ accessToken, email }) => ({ accessToken, email }))(user);
+      const pickedUser = user && (({ email }) => ({ email }))(user);
       console.log("User object:", pickedUser);
       dispatch(setCurrentUser(pickedUser));
     });
