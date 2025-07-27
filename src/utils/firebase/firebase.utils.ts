@@ -20,8 +20,6 @@ import {
   writeBatch,
   query,
   getDocs,
-  DocumentSnapshot,
-  DocumentData,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -78,11 +76,8 @@ export const getCategoriesAndDocuments = async () => {
   return querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
 };
 
-export const createUserDocumentFromAuth = async (
-  user: User,
-  additionalDetails: Record<string, any> = {}
-): Promise<DocumentSnapshot<DocumentData> | undefined> => {
-  if (!user || !user.uid) throw new Error("Invalid user");
+export const createUserDocumentFromAuth = async (user: User) => {
+  if (!user || !user.uid) return;
 
   const userDocRef = doc(db, "users", user.uid);
   const userSnapshot = await getDoc(userDocRef);
@@ -96,14 +91,13 @@ export const createUserDocumentFromAuth = async (
         displayName,
         email,
         createdAt,
-        ...additionalDetails,
       });
     } catch (error) {
       console.error("Error creating the user", error);
     }
   }
 
-  return userSnapshot;
+  return userDocRef;
 };
 
 export const createAuthUserWithEmailAndPassword = async (
@@ -130,17 +124,4 @@ export const signOutUser = async () => {
 
 export const onAuthStateChangedListener = (callback: NextOrObserver<User>) => {
   onAuthStateChanged(auth, callback);
-};
-
-export const getCurrentUser = (): Promise<User | null> => {
-  return new Promise((resolve, reject) => {
-    const unsubscribe = onAuthStateChanged(
-      auth,
-      (userAuth) => {
-        unsubscribe();
-        resolve(userAuth);
-      },
-      reject
-    );
-  });
 };

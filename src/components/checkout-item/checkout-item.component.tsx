@@ -5,19 +5,16 @@ import {
   addItemToCart,
   removeItemFromCart,
   deleteItemFromCart,
-} from "../../store/cart/cart.action";
-import { ICartItem } from "../../store/cart/cart.types";
+} from "../../store/cart/cart.reducer";
+import { ICartItem } from "../../store/cart/cart.reducer";
 
 const CheckoutItem = ({ cartItem }: { cartItem: ICartItem }) => {
   const { name, imageUrl, price, quantity } = cartItem;
-  const cartItems = useSelector(selectCartItems);
   const dispatch = useDispatch();
 
-  const addItemHandler = () => dispatch(addItemToCart(cartItems, cartItem));
-  const removeItemHandler = () =>
-    dispatch(removeItemFromCart(cartItems, cartItem));
-  const deleteItemHandler = () =>
-    dispatch(deleteItemFromCart(cartItems, cartItem));
+  const addItemHandler = () => dispatch(addItemToCart(cartItem));
+  const removeItemHandler = () => dispatch(removeItemFromCart(cartItem));
+  const deleteItemHandler = () => dispatch(deleteItemFromCart(cartItem));
 
   return (
     <div className="checkout-item-container">
@@ -35,7 +32,7 @@ const CheckoutItem = ({ cartItem }: { cartItem: ICartItem }) => {
         </div>
       </span>
       <span className="price">${price}</span>
-      <div className="remove-button" onClick={() => deleteItemHandler}>
+      <div className="remove-button" onClick={deleteItemHandler}>
         &#10005;
       </div>
     </div>

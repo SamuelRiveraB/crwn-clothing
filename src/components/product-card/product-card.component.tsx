@@ -2,15 +2,15 @@ import "./product-card.styles.scss";
 import Button from "../button/button.component";
 import { useSelector, useDispatch } from "react-redux";
 import { selectCartItems } from "../../store/cart/cart.selector";
-import { addItemToCart } from "../../store/cart/cart.action";
-import { ICartItem } from "../../store/cart/cart.types";
+import { addItemToCart } from "../../store/cart/cart.reducer";
+import { ICartItem } from "../../store/cart/cart.reducer";
 
 const ProductCard = ({ product }: { product: ICartItem }) => {
   const { name, price, imageUrl } = product;
   const dispatch = useDispatch();
   const cartItems = useSelector(selectCartItems);
   const addProductToCart = () => {
-    dispatch(addItemToCart(cartItems, product));
+    dispatch(addItemToCart(product));
   };
 
   return (
