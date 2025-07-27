@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import {
   BaseButton,
+  ButtonSpinner,
   GoogleSignInButton,
   InvertedButton,
 } from "./button.styles";
@@ -21,11 +22,21 @@ const getButton = (buttonType: string = BUTTON_TYPE_CLASSES.base) =>
 type ButtonProps = {
   children: ReactNode;
   buttonType?: "google-sign-in" | "inverted";
+  isLoading?: boolean;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-const Button = ({ children, buttonType, ...otherProps }: ButtonProps) => {
+const Button = ({
+  children,
+  buttonType,
+  isLoading,
+  ...otherProps
+}: ButtonProps) => {
   const CustomButton = getButton(buttonType);
-  return <CustomButton {...otherProps}>{children}</CustomButton>;
+  return (
+    <CustomButton disabled={isLoading} {...otherProps}>
+      {isLoading ? <ButtonSpinner /> : children}
+    </CustomButton>
+  );
 };
 
 export default Button;

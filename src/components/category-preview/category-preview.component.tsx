@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
-import { Product } from "../../contexts/categories.context";
 import ProductCard from "../product-card/product-card.component";
 import "./category-preview.styles.scss";
+import { ICartItem } from "../../store/cart/cart.reducer";
 
 const CategoryPreview = ({
   title,
   products,
 }: {
   title: string;
-  products: Product[];
+  products: ICartItem[];
 }) => {
   return (
     <div className="category-preview-container">

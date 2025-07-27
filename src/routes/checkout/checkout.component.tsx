@@ -5,6 +5,8 @@ import {
   selectCartItems,
   selectCartTotal,
 } from "../../store/cart/cart.selector";
+import PaymentForm from "../../components/payment-form/payment-form.component";
+import { ICartItem } from "../../store/cart/cart.reducer";
 
 const Checkout = () => {
   const cartItems = useSelector(selectCartItems);
@@ -28,10 +30,11 @@ const Checkout = () => {
           <span>Remove</span>
         </div>
       </div>
-      {cartItems.map((item) => (
+      {cartItems.map((item: ICartItem) => (
         <CheckoutItem key={item.id} cartItem={item} />
       ))}
       <span className="total">Total: ${cartTotal}</span>
+      <PaymentForm />
     </div>
   );
 };

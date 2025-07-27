@@ -20,7 +20,6 @@ const App = () => {
         createUserDocumentFromAuth(user);
       }
       const pickedUser = user && (({ email }) => ({ email }))(user);
-      console.log("User object:", pickedUser);
       dispatch(setCurrentUser(pickedUser));
     });
 
