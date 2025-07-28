@@ -9,7 +9,6 @@ import { configureStore } from "@reduxjs/toolkit";
 // import storage from "redux-persist/lib/storage";
 import logger from "redux-logger";
 import { RootState, rootReducer } from "./root-reducer";
-import { get } from "http";
 // import createSagaMiddleware from "redux-saga";
 // import { rootSaga } from "./root-saga";
 
@@ -35,7 +34,7 @@ import { get } from "http";
 const middlewares = [
   process.env.NODE_ENV !== "production" && logger,
   //   sagaMiddleware,
-].filter(Boolean) as Middleware[];
+].filter((middleware): middleware is Middleware => Boolean(middleware));
 
 // const composeEnhancer =
 //   (process.env.NODE_ENV !== "production" &&
